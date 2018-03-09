@@ -49,7 +49,8 @@ void BODY(setInertia)(int wid, int skid, int bid, double inv33[3][3]);
 ////////////////////////////////////////
 // BodyNode::Momentum Functions
 void BODY(getLocalCOM)(int wid, int skid, int bid, double outv3[3]);
-void BODY(getCOM)(int wid, int skid, int bid, double outv3[3]);
+void BODY(getCOMWorld)(int wid, int skid, int bid, double outv3[3]);
+void BODY(getCOMFrame)(int wid, int skid, int bid, int fid, double outv3[3]);
 void BODY(getCOMLinearVelocity)(int wid, int skid, int bid, double outv3[3]);
 void BODY(getCOMSpatialVelocity)(int wid, int skid, int bid, double outv6[6]);
 void BODY(getCOMLinearAcceleration)(int wid, int skid, int bid, double outv3[3]);

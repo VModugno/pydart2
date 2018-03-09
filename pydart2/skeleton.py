@@ -279,8 +279,11 @@ class Skeleton(object):
     def dof_indices(self, _names):
         return np.array([self.dof_index(n) for n in _names])
 
-    def com(self):
-        return papi.skeleton__getCOM(self.world.id, self.id)
+    def com(self,frame = None):
+        if frame is not None:
+            return papi.skeleton__getCOMFrame(self.world.id, self.id,frame._id)
+        else:
+            return papi.skeleton__getCOMWorld(self.world.id, self.id)
 
     @property
     def C(self):

@@ -65,7 +65,8 @@ void SKEL(getJacobianFrame)(int wid, int skid, int bid, int fid, double* outm, i
 
 ////////////////////////////////////////
 // Skeleton::Momentum Functions
-void SKEL(getCOM)(int wid, int skid, double outv3[3]);
+void SKEL(getCOMWorld)(int wid, int skid, double outv3[3]);
+void SKEL(getCOMFrame)(int wid, int skid, int fid, double outv3[3]);
 void SKEL(getCOMLinearVelocity)(int wid, int skid, double outv3[3]);
 void SKEL(getCOMLinearAcceleration)(int wid, int skid, double outv3[3]);
 

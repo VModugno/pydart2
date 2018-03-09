@@ -186,8 +186,11 @@ class BodyNode(object):
     def local_com(self, ):
         return papi.bodynode__getLocalCOM(self.wid, self.skid, self.id)
 
-    def com(self, ):
-        return papi.bodynode__getCOM(self.wid, self.skid, self.id)
+    def com(self, frame = None):
+        if frame is not None:
+            return papi.bodynode__getCOMFrame(self.wid, self.skid, self.id,frame._id)
+        else:
+            return papi.bodynode__getCOMWorld(self.wid, self.skid, self.id)
 
     @property
     def C(self):

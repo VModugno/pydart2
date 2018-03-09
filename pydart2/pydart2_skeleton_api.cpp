@@ -238,9 +238,15 @@ void SKEL(getJacobianFrame)(int wid, int skid, int bid, int fid, double* outm, i
 
 ////////////////////////////////////////
 // Skeleton::Momentum Functions
-void SKEL(getCOM)(int wid, int skid, double outv3[3]) {
+void SKEL(getCOMWorld)(int wid, int skid, double outv3[3]) {
    dart::dynamics::SkeletonPtr skel = GET_SKELETON(wid, skid);
    write(skel->getCOM(), outv3);
+}
+
+void SKEL(getCOMFrame)(int wid, int skid, int fid, double outv3[3]){
+	dart::dynamics::SkeletonPtr skel  = GET_SKELETON(wid, skid);
+	dart::dynamics::BodyNodePtr frame = skel->getBodyNode(fid);
+	write(skel->getCOM(frame), outv3);
 }
 
 void SKEL(getCOMLinearVelocity)(int wid, int skid, double outv3[3]) {
