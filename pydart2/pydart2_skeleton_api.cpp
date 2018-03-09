@@ -215,6 +215,28 @@ void SKEL(getForceUpperLimits)(int wid, int skid, double* outv, int ndofs) {
 }
 
 ////////////////////////////////////////
+// Skeleton::Jacobian Function
+void SKEL(getCOMJacobian)(int wid, int skid, int fid, double* outm, int nrows, int ncols){
+	dart::dynamics::SkeletonPtr skel = GET_SKELETON(wid, skid);
+	dart::dynamics::BodyNodePtr frame = skel->getBodyNode(fid);
+	write_matrix(skel->getCOMJacobian(frame), outm);
+}
+
+void SKEL(getJacobianWorld)(int wid, int skid, int bid, double* outm, int nrows, int ncols){
+	dart::dynamics::SkeletonPtr skel  = GET_SKELETON(wid, skid);
+	dart::dynamics::BodyNodePtr body  = skel->getBodyNode(bid);
+	write_matrix(skel->getJacobian(body), outm);
+}
+
+void SKEL(getJacobianFrame)(int wid, int skid, int bid, int fid, double* outm, int nrows, int ncols){
+	dart::dynamics::SkeletonPtr skel  = GET_SKELETON(wid, skid);
+    dart::dynamics::BodyNodePtr body  = skel->getBodyNode(bid);
+    dart::dynamics::BodyNodePtr frame = skel->getBodyNode(fid);
+	write_matrix(skel->getJacobian(body,frame), outm);
+}
+
+
+////////////////////////////////////////
 // Skeleton::Momentum Functions
 void SKEL(getCOM)(int wid, int skid, double outv3[3]) {
    dart::dynamics::SkeletonPtr skel = GET_SKELETON(wid, skid);

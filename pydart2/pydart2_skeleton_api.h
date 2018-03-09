@@ -58,6 +58,12 @@ void SKEL(getForceLowerLimits)(int wid, int skid, double* outv, int ndofs);
 void SKEL(getForceUpperLimits)(int wid, int skid, double* outv, int ndofs);
 
 ////////////////////////////////////////
+// skeleton::Jacobian Functions
+void SKEL(getCOMJacobian)(int wid, int skid, int fid, double* outm, int nrows, int ncols);
+void SKEL(getJacobianWorld)(int wid, int skid, int bid, double* outm, int nrows, int ncols);
+void SKEL(getJacobianFrame)(int wid, int skid, int bid, int fid, double* outm, int nrows, int ncols);
+
+////////////////////////////////////////
 // Skeleton::Momentum Functions
 void SKEL(getCOM)(int wid, int skid, double outv3[3]);
 void SKEL(getCOMLinearVelocity)(int wid, int skid, double outv3[3]);
