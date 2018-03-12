@@ -186,12 +186,18 @@ void BODY(getLocalCOM)(int wid, int skid, int bid, double outv3[3]) {
 
 void BODY(getCOMWorld)(int wid, int skid, int bid, double outv3[3]) {
     dart::dynamics::BodyNodePtr body = GET_BODY(wid, skid, bid);
+    // DEBUG
+    std::cout << "body getCOMWorld" << std::endl;
+    std::cout << body->getCOM() << std::endl;
     write(body->getCOM(), outv3);
 }
 
 void BODY(getCOMFrame)(int wid, int skid, int bid, int fid, double outv3[3]) {
     dart::dynamics::BodyNodePtr body  = GET_BODY(wid, skid, bid);
     dart::dynamics::BodyNodePtr frame = GET_BODY(wid, skid, fid);
+    // DEBUG
+	std::cout << "body getCOMFrame" << std::endl;
+	std::cout << body->getCOM(frame) << std::endl;
     write(body->getCOM(frame), outv3);
 }
 

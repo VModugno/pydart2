@@ -124,7 +124,9 @@ class World(object):
     def step(self):
         for skel in self.skeletons:
             if skel.controller is not None:
-                skel.tau = skel.controller.compute()
+                # i changed this line in order to alllow different control method from torque mode control
+                #skel.tau = skel.controller.compute()
+                skel.controller.compute()                  
 
         papi.world__step(self.id)
         self._frame += 1

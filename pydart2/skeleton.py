@@ -281,9 +281,11 @@ class Skeleton(object):
 
     def com(self,frame = None):
         if frame is not None:
-            return papi.skeleton__getCOMFrame(self.world.id, self.id,frame._id)
+            ret = papi.skeleton__getCOMFrame(self.world.id, self.id,frame._id) 
+            return np.reshape(ret,(3,1))
         else:
-            return papi.skeleton__getCOMWorld(self.world.id, self.id)
+            ret = papi.skeleton__getCOMWorld(self.world.id, self.id)
+            return np.reshape(ret,(3,1))
 
     @property
     def C(self):
@@ -320,6 +322,9 @@ class Skeleton(object):
     def set_forces(self, _tau):
         self._tau = _tau
         papi.skeleton__setForces(self.world.id, self.id, _tau)
+        
+    def set_commands(self,_commands):
+        papi.skeleton__setCommands(self.world.id, self.id, _commands)
 
     @tau.setter
     def tau(self, _tau):
@@ -348,23 +353,23 @@ class Skeleton(object):
     def force_upper_limits(self):
         return papi.skeleton__getForceUpperLimits(self.world.id,
                                                   self.id, self.ndofs)
-    def get_COM_jacobian(self,frame):
-        J = np.zeros((6, len(self.dependent_dofs) + 6))
-        papi.skeleton__getCOMJacobian(self.wid,self.skid,frame._id,J)
+    def get_COM_jacobian(self,frame, full = False):
+        J = np.zeros((6,self.ndofs))
+        papi.skeleton__getCOMJacobian(self.world.id,self.id,frame._id,J)
         return self.expand_jacobian(J) if full else J
     
-    def get_jacobian(self,body,frame = None ):
-        J = np.zeros((6, len(self.dependent_dofs)))
+    def get_jacobian(self,body,frame = None, full = False):
+        J = np.zeros((6, self.ndofs))
         if frame is not None:
-            papi.skeleton__getJacobianFrame(self.wid,self.skid,body._id,frame._id,J)  
+            papi.skeleton__getJacobianFrame(self.world.id,self.id,body._id,frame._id,J)  
         else:
-            papi.skeleton__getJacobianWorld(self.wid,self.skid,body._id,J)
+            papi.skeleton__getJacobianWorld(self.world.id,self.id,body._id,J)
         return self.expand_jacobian(J) if full else J
     
     def expand_jacobian(self, jacobian):
         J = jacobian
-        F = np.zeros((J.shape[0], self.skel.ndofs))
-        I = np.array([dof.index for dof in self.dependent_dofs])
+        F = np.zeros((J.shape[0], self.ndofs))
+        I = np.array([dof.index for dof in self.ndofs])
         F[:, I] = J
         return F   
 

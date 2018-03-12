@@ -168,6 +168,11 @@ void SKEL(setForces)(int wid, int skid, double* inv, int ndofs) {
     skel->setForces(read(inv, ndofs));
 }
 
+void SKEL(setCommands)(int wid, int skid, double* inv, int ndofs) {
+    dart::dynamics::SkeletonPtr skel = GET_SKELETON(wid, skid);
+    skel->setCommands(read(inv, ndofs));
+}
+
 ////////////////////////////////////////
 // Skeleton::Difference Functions
 void SKEL(getPositionDifferences)(int wid, int skid,
@@ -219,12 +224,20 @@ void SKEL(getForceUpperLimits)(int wid, int skid, double* outv, int ndofs) {
 void SKEL(getCOMJacobian)(int wid, int skid, int fid, double* outm, int nrows, int ncols){
 	dart::dynamics::SkeletonPtr skel = GET_SKELETON(wid, skid);
 	dart::dynamics::BodyNodePtr frame = skel->getBodyNode(fid);
+	// DEBUG
+		Eigen::MatrixXd jac = (skel->getCOMJacobian(frame));
+		std::cout << "skel getCOMJacobian" << std::endl;
+		std::cout << "rows = " << jac.rows() << "  cols = " << jac.cols() << std::endl; 
 	write_matrix(skel->getCOMJacobian(frame), outm);
 }
 
 void SKEL(getJacobianWorld)(int wid, int skid, int bid, double* outm, int nrows, int ncols){
 	dart::dynamics::SkeletonPtr skel  = GET_SKELETON(wid, skid);
 	dart::dynamics::BodyNodePtr body  = skel->getBodyNode(bid);
+	// DEBUG
+		Eigen::MatrixXd jac = (skel->getJacobian(body));
+		std::cout << "skel getJacobianWorld" << std::endl;
+		std::cout << "rows = " << jac.rows() << "  cols = " << jac.cols() << std::endl; 
 	write_matrix(skel->getJacobian(body), outm);
 }
 
@@ -232,6 +245,10 @@ void SKEL(getJacobianFrame)(int wid, int skid, int bid, int fid, double* outm, i
 	dart::dynamics::SkeletonPtr skel  = GET_SKELETON(wid, skid);
     dart::dynamics::BodyNodePtr body  = skel->getBodyNode(bid);
     dart::dynamics::BodyNodePtr frame = skel->getBodyNode(fid);
+    //DEBUG
+		Eigen::MatrixXd jac = (skel->getJacobian(body,frame));
+		std::cout << "skel getJacobianFrame" << std::endl;
+		std::cout << "rows = " << jac.rows() << "  cols = " << jac.cols() << std::endl; 
 	write_matrix(skel->getJacobian(body,frame), outm);
 }
 
@@ -240,12 +257,18 @@ void SKEL(getJacobianFrame)(int wid, int skid, int bid, int fid, double* outm, i
 // Skeleton::Momentum Functions
 void SKEL(getCOMWorld)(int wid, int skid, double outv3[3]) {
    dart::dynamics::SkeletonPtr skel = GET_SKELETON(wid, skid);
+   // DEBUG
+	   std::cout << "skel getCOMWorld" << std::endl;
+	   std::cout << skel->getCOM() << std::endl;
    write(skel->getCOM(), outv3);
 }
 
 void SKEL(getCOMFrame)(int wid, int skid, int fid, double outv3[3]){
 	dart::dynamics::SkeletonPtr skel  = GET_SKELETON(wid, skid);
 	dart::dynamics::BodyNodePtr frame = skel->getBodyNode(fid);
+    // DEBUG
+		std::cout << "skel getCOMFrame" << std::endl;
+		std::cout << skel->getCOM(frame) << std::endl;
 	write(skel->getCOM(frame), outv3);
 }
 

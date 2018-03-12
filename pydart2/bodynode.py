@@ -188,9 +188,11 @@ class BodyNode(object):
 
     def com(self, frame = None):
         if frame is not None:
-            return papi.bodynode__getCOMFrame(self.wid, self.skid, self.id,frame._id)
+            ret = papi.bodynode__getCOMFrame(self.wid, self.skid, self.id,frame._id)
+            return np.reshape(ret,(3,1))
         else:
-            return papi.bodynode__getCOMWorld(self.wid, self.skid, self.id)
+            ret = papi.bodynode__getCOMWorld(self.wid, self.skid, self.id)
+            return np.reshape(ret,(3,1))
 
     @property
     def C(self):
