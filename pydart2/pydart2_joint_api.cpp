@@ -149,6 +149,16 @@ void JOINT(setPositionUpperLimit)(int wid, int skid, int jid, int _index, double
     joint->setPositionUpperLimit(_index, _position);
 }
 
+void JOINT(setForceLowerLimit)(int wid, int skid, int jid, int _index, double _force){
+    dart::dynamics::JointPtr joint = GET_JOINT(wid, skid, jid);
+    joint->setForceLowerLimit(_index,_force);
+
+}
+void JOINT(setForceUpperLimit)(int wid, int skid, int jid, int _index, double _force){
+    dart::dynamics::JointPtr joint = GET_JOINT(wid, skid, jid);
+    joint->setForceUpperLimit(_index,_force);
+}
+
 ////////////////////////////////////////
 // Joint::Dof Functions
 int JOINT(getDof)(int wid, int skid, int jid, int _index) {
@@ -210,6 +220,8 @@ void JOINT(setCoulombFriction)(int wid, int skid, int jid, int _index, double _f
     dart::dynamics::JointPtr joint = GET_JOINT(wid, skid, jid);
     joint->setCoulombFriction(_index, _friction);
 }
+
+
 
 
 ////////////////////////////////////////

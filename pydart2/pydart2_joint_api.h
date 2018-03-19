@@ -35,6 +35,8 @@ double JOINT(getPositionLowerLimit)(int wid, int skid, int jid, int _index);
 void JOINT(setPositionLowerLimit)(int wid, int skid, int jid, int _index, double _position);
 double JOINT(getPositionUpperLimit)(int wid, int skid, int jid, int _index);
 void JOINT(setPositionUpperLimit)(int wid, int skid, int jid, int _index, double _position);
+void JOINT(setForceLowerLimit)(int wid, int skid, int jid, int _index, double _position);
+void JOINT(setForceUpperLimit)(int wid, int skid, int jid, int _index, double _position);
 
 ////////////////////////////////////////
 // Joint::Dof Functions

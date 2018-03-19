@@ -161,17 +161,37 @@ class Joint(object):
                                                  self.id,
                                                  _index)
 
-    def set_position_upper_limit(self, _index, _position):
+    def set_position_upper_limit(self, _index, _force):
         papi.joint__setPositionUpperLimit(self.wid,
                                           self.skid,
                                           self.id,
                                           _index,
-                                          _position)
+                                          _force)
+    def set_force_lower_limit(self, _index, _position):
+        papi.joint__setForceLowerLimit(self.wid,
+                                       self.skid,
+                                       self.id,
+                                       _index,
+                                       _position)
+        
+    def set_force_upper_limit(self, _index, _force):
+        papi.joint__setForceUpperLimit(self.wid,
+                                       self.skid,
+                                       self.id,
+                                       _index,
+                                       _force)    
+        
+        
 
 ########################################
 # Joint::Dof functions
     def num_dofs(self, ):
         return len(self.dofs)
+    
+    def get_num_dofs(self, ):
+        _ndofs = papi.joint__getNumDofs(self.wid, self.skid, self.id)
+        return _ndofs
+        
 
 ########################################
 # Joint::Passive Force functions
