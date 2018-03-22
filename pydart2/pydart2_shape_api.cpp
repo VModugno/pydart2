@@ -91,7 +91,7 @@ int SHAPE(getTypeID)(int wid, int skid, int bid, int sid) {
     using dart::dynamics::CapsuleShape;
     using dart::dynamics::ConeShape;
     using dart::dynamics::PlaneShape;
-    using dart::dynamics::MultiSphereShape;
+    using dart::dynamics::MultiSphereConvexHullShape;
     using dart::dynamics::MeshShape;
     using dart::dynamics::SoftMeshShape;
     using dart::dynamics::LineSegmentShape;
@@ -105,7 +105,7 @@ int SHAPE(getTypeID)(int wid, int skid, int bid, int sid) {
     else if (shape->is<CapsuleShape>()) return 4;
     else if (shape->is<ConeShape>()) return 5;
     else if (shape->is<PlaneShape>()) return 6;
-    else if (shape->is<MultiSphereShape>()) return 7;
+    else if (shape->is<MultiSphereConvexHullShape>()) return 7;
     else if (shape->is<MeshShape>()) return 8;
     else if (shape->is<SoftMeshShape>()) return 9;
     else if (shape->is<LineSegmentShape>()) return 10;
@@ -160,14 +160,14 @@ void BOX_SHAPE(setSize)(int wid, int skid, int bid, int sid, double inv3[3]) {
 void ELLIPSOID_SHAPE(getSize)(int wid, int skid, int bid, int sid, double outv3[3]) {
     dart::dynamics::EllipsoidShape* shape = GET_ELLIPSOID_SHAPE(wid, skid, bid, sid);
     if (shape != NULL) {
-      write(shape->getSize(), outv3);
+      write(shape->getDiameters(), outv3);
     }
 }
 
 void ELLIPSOID_SHAPE(setSize)(int wid, int skid, int bid, int sid, double inv3[3]) {
     dart::dynamics::EllipsoidShape* shape = GET_ELLIPSOID_SHAPE(wid, skid, bid, sid);
     if (shape != NULL) {
-        shape->setSize(read(inv3, 3));
+        shape->setDiameters(read(inv3, 3));
     }
 }
 

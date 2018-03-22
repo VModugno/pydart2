@@ -17,9 +17,13 @@ def check_file(directories, file):
             return True
     return False
 
+home_path               = os.environ['HOME']
+include_path_local_dart = home_path + '/local_usr/include'
+lib_path_local_dart     = home_path + '/local_usr/lib'
 
 DIR = 'pydart2/'
-dirs = ['/usr/include', '/usr/local/include']
+#dirs = ['/usr/include', '/usr/local/include']
+dirs = [include_path_local_dart]
 print("-- check DART headers --")
 PYDART2_BULLET_FOUND = \
     check_file(dirs, "dart/collision/bullet/BulletCollisionDetector.hpp")
@@ -30,7 +34,8 @@ PYDART2_ODE_FOUND = \
 print("PYDART2_ODE_FOUND = %s" % PYDART2_ODE_FOUND)
 print("------------------------")
 
-CXX_FLAGS = '-Wall -msse2 -fPIC -std=c++11 -Xlinker -rpath /usr/local/lib '
+CXX_FLAGS  = '-Wall -msse2 -fPIC -std=c++11 '# -Xlinker -rpath ' +  lib_path_local_dart + ' '
+#CXX_FLAGS = '-Wall -msse2 -fPIC -std=c++11 -Xlinker -rpath /usr/local/lib '
 CXX_FLAGS += '-O3 -DNDEBUG -shared '
 CXX_FLAGS += '-g -fno-omit-frame-pointer -fno-inline-functions '
 CXX_FLAGS += '-fno-optimize-sibling-calls '
@@ -50,7 +55,8 @@ print("CXX_FLAGS: %s" % str(CXX_FLAGS))
 # CXX_FLAGS += '-DPY_VERSION_HEX=0x03000000'
 
 include_dirs = list()
-include_dirs += ['/usr/include']
+#include_dirs += ['/usr/include']
+include_dirs += [include_path_local_dart]
 include_dirs += ['/usr/include/eigen3']
 
 # Fetch python version
@@ -138,7 +144,9 @@ pydart2_api = Extension('_pydart2_api',
                                        ('MINOR_VERSION', '0')],
                         include_dirs=include_dirs,
                         libraries=libraries,
-                        library_dirs=['/usr/local/lib'],
+                        #library_dirs=['/usr/local/lib'],
+                        library_dirs=[lib_path_local_dart],
+                        runtime_library_dirs =[lib_path_local_dart],
                         extra_compile_args=CXX_FLAGS.split(),
                         swig_opts=swig_opts,
                         sources=sources,
