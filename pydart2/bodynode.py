@@ -188,7 +188,7 @@ class BodyNode(object):
 
     def com(self, frame = None):
         if frame is not None:
-            ret = papi.bodynode__getCOMFrame(self.wid, self.skid, self.id,frame._id)
+            ret = papi.bodynode__getCOMFrame(self.wid, self.skid, self.id,frame.id)
             return np.reshape(ret,(3,1))
         else:
             ret = papi.bodynode__getCOMWorld(self.wid, self.skid, self.id)
@@ -241,8 +241,12 @@ class BodyNode(object):
 
 ########################################
 # Transform Functions
-    def transform(self, ):
-        return papi.bodynode__getTransform(self.wid, self.skid, self.id)
+    def transform(self, frame = None):
+        if frame is not None:
+            return papi.bodynode__getTransformFrame(self.wid, self.skid, self.id, frame.id)
+        else:
+            return papi.bodynode__getTransformWorld(self.wid, self.skid, self.id)
+        
 
     @property
     def T(self):

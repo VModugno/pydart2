@@ -291,19 +291,19 @@ class Skeleton(object):
     def C(self):
         return self.com()
 
-    def com_velocity(self):
+    def com_linear_velocity(self):
         return papi.skeleton__getCOMLinearVelocity(self.world.id, self.id)
 
     @property
     def dC(self):
-        return self.com_velocity()
+        return self.com_linear_velocity()
 
-    def com_acceleration(self):
+    def com_linear_acceleration(self):
         return papi.skeleton__getCOMLinearAcceleration(self.world.id, self.id)
 
     @property
     def ddC(self):
-        return self.com_acceleration()
+        return self.com_linear_acceleration()
 
     def linear_momentum(self):
         return self.Cdot * self.m

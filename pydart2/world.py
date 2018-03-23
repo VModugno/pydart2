@@ -99,11 +99,11 @@ class World(object):
         self.set_time_step(_dt)
 
     def num_frames(self):
-        # return papi.world__getSimFrames(self.id)
-        if self.recording:
-            return self.recording.num_frames()
-        else:
-            return 0
+        return papi.world__getSimFrames(self.id)
+#        if self.recording:
+#            return self.recording.num_frames()
+#        else:
+#            return 0
 
     @property
     def nframes(self):

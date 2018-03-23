@@ -65,7 +65,8 @@ double BODY(getRestitutionCoeff)(int wid, int skid, int bid);
 
 ////////////////////////////////////////
 // BodyNode::Transforms
-void BODY(getTransform)(int wid, int skid, int bid, double outv44[4][4]);
+void BODY(getTransformWorld)(int wid, int skid, int bid, double outv44[4][4]);
+void BODY(getTransformFrame)(int wid, int skid, int bid, int fid, double outv44[4][4]);
 void BODY(getWorldTransform)(int wid, int skid, int bid, double outv44[4][4]);
 void BODY(getRelativeTransform)(int wid, int skid, int bid, double outv44[4][4]);
 

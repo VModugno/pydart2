@@ -253,9 +253,14 @@ double BODY(getRestitutionCoeff)(int wid, int skid, int bid) {
 
 ////////////////////////////////////////
 // BodyNode::Transforms
-void BODY(getTransform)(int wid, int skid, int bid, double outv44[4][4]) {
+void BODY(getTransformWorld)(int wid, int skid, int bid, double outv44[4][4]) {
     dart::dynamics::BodyNodePtr body = GET_BODY(wid, skid, bid);
     write_isometry(body->getTransform(), outv44);
+}
+void BODY(getTransformFrame)(int wid, int skid, int bid, int fid, double outv44[4][4]) {
+    dart::dynamics::BodyNodePtr body = GET_BODY(wid, skid, bid);
+    dart::dynamics::BodyNodePtr frame = GET_BODY(wid, skid, fid);
+    write_isometry(body->getTransform(frame), outv44);
 }
 
 
